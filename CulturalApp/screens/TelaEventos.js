@@ -11,12 +11,12 @@ const TelaEventos = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: 'https://images.unsplash.com/photo-1517457373958-b96c0d8e13c8' }}
+        source={{ uri: 'https://unsplash.com/pt-br/fotografias/um-grupo-de-pessoas-observando-um-dragao-flutuar-por-uma-rua-9wQ5TwdV5sgr' }}
         style={styles.headerImage}
       />
       <Text style={styles.title}>Eventos Culturais</Text>
       <Image
-        source={{ uri: 'https://images.unsplash.com/photo-1501386760812-8a405693a775' }}
+        source={{ uri: 'https://unsplash.com/pt-br/fotografias/um-grupo-de-pessoas-caminhando-por-uma-rua-r3GdQ9XjGMU' }}
         style={styles.headerImage}
       />
       <FlatList
