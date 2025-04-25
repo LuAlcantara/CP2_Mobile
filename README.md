@@ -25,7 +25,7 @@ Um aplicativo React Native para troca de experiências culturais, permitindo exp
 
 - Tela de Compartilhar: Permite ao usuário compartilhar experiências culturais, selecionando um país e escrevendo uma história, com um feed para visualizar e curtir postagens.
 
-- Tela de Eventos: Lista estática de eventos culturais, com nome, data, local e descrição.
+- Tela de Artes: Lista estática artes culturais, com nome, data, local e descrição.
 
 - Tela Sobre: Informações sobre os desenvolvedores do projeto.
 
@@ -43,5 +43,5 @@ Um aplicativo React Native para troca de experiências culturais, permitindo exp
 
 ## Desenvolvedores
 Lucas - RM 95111
-Larissa - 
-Pedro - 
+Larissa - RM 552628
+Pedro - RM 553874
