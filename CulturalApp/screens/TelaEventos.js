@@ -1,38 +1,59 @@
-import React from 'react';
-import { View, Text, FlatList, Image } from 'react-native';
-import styles from '../styles'; // Importando estilos
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, Image, TouchableOpacity, Linking } from 'react-native';
+import axios from 'axios';
+import styles from '../styles';
 
-const TelaEventos = () => {
-  const events = [
-    { id: '1', name: 'Festival Cultural', date: '10/05/2025', location: 'São Paulo', description: 'Um festival com música e dança.' },
-    { id: '2', name: 'Exposição de Arte', date: '15/05/2025', location: 'Rio de Janeiro', description: 'Exposição de arte local.' },
-  ];
+const TelaArtesCulturais = () => {
+  const [obras, setObras] = useState([]);
+
+  useEffect(() => {
+    const buscarObras = async () => {
+      try {
+        const resposta = await axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?q=culture');
+        const ids = resposta.data.objectIDs.slice(0, 5); // Pega apenas 5 obras
+
+        const detalhesObras = await Promise.all(
+          ids.map(async (id) => {
+            const res = await axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`);
+            return res.data;
+          })
+        );
+
+        setObras(detalhesObras);
+      } catch (erro) {
+        console.error('Erro ao buscar obras culturais:', erro);
+      }
+    };
+
+    buscarObras();
+  }, []);
+
+  const abrirLink = (url) => {
+    Linking.openURL(url);
+  };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={{ uri: 'https://unsplash.com/pt-br/fotografias/um-grupo-de-pessoas-observando-um-dragao-flutuar-por-uma-rua-9wQ5TwdV5sgr' }}
-        style={styles.headerImage}
-      />
-      <Text style={styles.title}>Eventos Culturais</Text>
-      <Image
-        source={{ uri: 'https://unsplash.com/pt-br/fotografias/um-grupo-de-pessoas-caminhando-por-uma-rua-r3GdQ9XjGMU' }}
-        style={styles.headerImage}
-      />
-      <FlatList
-        data={events}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.experienceCard}>
-            <Text style={styles.detailText}>{item.name}</Text>
-            <Text style={styles.detailText}>Data: {item.date}</Text>
-            <Text style={styles.detailText}>Local: {item.location}</Text>
-            <Text style={styles.detailText}>{item.description}</Text>
-          </View>
-        )}
-      />
-    </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Artes Culturais</Text>
+      {obras.map((item) => (
+        <TouchableOpacity
+          key={item.objectID}
+          onPress={() => abrirLink(item.objectURL)}
+          style={styles.experienceCard}
+        >
+          {item.primaryImageSmall ? (
+            <Image
+              source={{ uri: item.primaryImageSmall }}
+              style={{ height: 200, borderRadius: 8 }}
+            />
+          ) : null}
+          <Text style={styles.detailText}>{item.title}</Text>
+          <Text style={styles.detailText}>Cultura: {item.culture || 'Não informado'}</Text>
+          <Text style={styles.detailText}>Período: {item.period || 'Não informado'}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
-export default TelaEventos;
+export default TelaArtesCulturais;

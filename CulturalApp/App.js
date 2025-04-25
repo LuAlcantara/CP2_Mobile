@@ -3,12 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Provider as PaperProvider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Importando ícones
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Ícones do Material
+
 import CountryCard from './components/CountryCard';
 import TelaInicial from './screens/TelaInicial';
 import TelaDetalhes from './screens/TelaDetalhes';
 import TelaCompartilhar from './screens/TelaCompartilhar';
-import TelaEventos from './screens/TelaEventos';
+import TelaEventos from './screens/TelaEventos'; // agora representando "Artes"
 import TelaSobre from './screens/TelaSobre';
 
 const Stack = createStackNavigator();
@@ -37,8 +38,8 @@ export default function App() {
                 iconName = 'explore';
               } else if (route.name === 'Compartilhar') {
                 iconName = 'share';
-              } else if (route.name === 'Eventos') {
-                iconName = 'event';
+              } else if (route.name === 'Artes') {
+                iconName = 'palette'; // ícone artístico 🎨
               }
               return <Icon name={iconName} size={size} color={color} />;
             },
@@ -46,7 +47,7 @@ export default function App() {
         >
           <Tab.Screen name="Explorar" component={MainStack} />
           <Tab.Screen name="Compartilhar" component={TelaCompartilhar} />
-          <Tab.Screen name="Eventos" component={TelaEventos} />
+          <Tab.Screen name="Artes" component={TelaEventos} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
